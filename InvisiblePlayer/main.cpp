@@ -58,7 +58,7 @@ namespace Setting {
 }
 
 bool isInvisiblePlayer(Player* player) {
-	if (player->isPlayer()) {
+	if (!player->isPlayer()) {
 		return false;
 	}
 	auto name = player->getRealName();
@@ -71,11 +71,11 @@ bool isInvisiblePlayer(Player* player) {
 }
 
 bool isInvisiblePlayer(string name) {
-	if (Level::getPlayer(name)->isPlayer()) {
+	if (!Level::getPlayer(name)->isPlayer()) {
 		return false;
 	}
 	for (auto& i : Setting::InvPlayers) {
-		if (i == player) {
+		if (i == name) {
 			return true;
 		}
 	}
