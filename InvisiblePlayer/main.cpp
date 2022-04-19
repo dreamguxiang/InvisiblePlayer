@@ -70,6 +70,19 @@ bool isInvisiblePlayer(Player* player) {
 	return false;
 }
 
+bool isInvisiblePlayer(string name) {
+	if (Level::getPlayer(name)->isPlayer()) {
+		return false;
+	}
+	for (auto& i : Setting::InvPlayers) {
+		if (i == player) {
+			return true;
+		}
+	}
+	return false;
+}
+
+
 THook(void, "?onReady_ClientGeneration@ServerNetworkHandler@@QEAAXAEAVPlayer@@AEBVNetworkIdentifier@@@Z", ServerNetworkHandler* a1,
 	Player* a2,
 	const struct NetworkIdentifier* a3) {
@@ -82,7 +95,7 @@ THook(void, "?onReady_ClientGeneration@ServerNetworkHandler@@QEAAXAEAVPlayer@@AE
 
 THook(__int64, "?emplace@PlayerListPacket@@QEAAX$$QEAVPlayerListEntry@@@Z", PlayerListPacket* a1, PlayerListEntry& a2) {
 	if (a1->type == PlayerListPacketType::Add) {
-		if (a2.name == "GuXiangYa") {
+		if (isInvisiblePlayer(a2.name)) {
 			return 0;
 		}
 	}
