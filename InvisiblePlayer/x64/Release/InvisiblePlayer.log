@@ -1,0 +1,9 @@
+﻿  dllmain.cpp
+    正在创建库 C:\Users\Admin\source\repos\InvisiblePlayer\x64\Release\InvisiblePlayer.lib 和对象 C:\Users\Admin\source\repos\InvisiblePlayer\x64\Release\InvisiblePlayer.exp
+  正在生成代码
+  433 of 445 functions (97.3%) were compiled, the rest were copied from previous compilation.
+    29 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  已完成代码的生成
+  InvisiblePlayer.vcxproj -> C:\Users\Admin\source\repos\InvisiblePlayer\x64\Release\InvisiblePlayer.dll
+  已复制         1 个文件。
