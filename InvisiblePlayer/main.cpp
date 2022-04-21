@@ -10,7 +10,8 @@
 #include <MC/CrashDumpKeyValueData.hpp>
 #include <MC/CrashDumpLog.hpp>
 #include <MC/LevelStorage.hpp>
-
+#include <LLAPI.h>
+#include <EventAPI.h>
 Logger logger("InvisiblePlayer");
 enum CrashDumpLogStringID;
 
@@ -115,8 +116,8 @@ THook(void, "?_onPlayerLeft@ServerNetworkHandler@@AEAAXPEAVServerPlayer@@_N@Z", 
 		auto cert = a2->getCertificate();
 		if (cert) {
 			auto& UniqueID = a2->getUniqueID();
-			auto v29 = CrashDumpKeyValueData((CrashDumpLogStringID)75,(CrashDumpLogStringID)0,UniqueID.get(),0);
-			CrashDumpLog::logKeyValue(v29);
+			//auto v29 = CrashDumpKeyValueData((CrashDumpLogStringID)75,(CrashDumpLogStringID)0,UniqueID.get(),0);
+			//CrashDumpLog::logKeyValue(v29);
 			Global<LevelStorage>->save(*a2);
 			a2->disconnect();
 			a2->remove();
@@ -156,7 +157,35 @@ THook(bool, "std::_Func_impl_no_alloc<<lambda_f326310c15e76ef408de41745bd1cc1a>,
 }
 
 
+void loadCfg() {
+	//config
+	if (!std::filesystem::exists("plugins/InvisiblePlayer"))
+		std::filesystem::create_directories("plugins/InvisiblePlayer");
+	//tr	
+	if (std::filesystem::exists("plugins/InvisiblePlayer/config.json")) {
+		try {
+			Setting::LoadConfigFromJson("plugins/InvisiblePlayer/config.json");
+		}
+		catch (std::exception& e) {
+			logger.error("Config File isInvalid, Err {}", e.what());
+			Sleep(1000 * 100);
+			exit(1);
+		}
+		catch (...) {
+			logger.error("Config File isInvalid");
+			Sleep(1000 * 100);
+			exit(1);
+		}
+	}
+	else {
+		logger.info("Config with default values created");
+		Setting::WriteDefaultConfig("plugins/InvisiblePlayer/config.json");
+	}
+}//º”‘ÿ≈‰÷√Œƒº˛
+
+
 void PluginInit()
 {
+	loadCfg();
 	logger.info("[InvisiblePlayer] Loaded success");
 }

@@ -81,8 +81,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(MSBuildStartupDirectory)\SDK\Header\third-party;$(MSBuildStartupDirectory)\SDK\Header\;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>$(MSBuildStartupDirectory);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>C:\Users\Admin\source\repos\BETweaker\SDK\Header\third-party;C:\Users\Admin\source\repos\BETweaker\SDK\Header\;$(VC_IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Admin\source\repos\BETweaker;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
