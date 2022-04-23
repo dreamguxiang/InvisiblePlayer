@@ -12,6 +12,7 @@
 #include <MC/LevelStorage.hpp>
 #include <LLAPI.h>
 #include <EventAPI.h>
+#include <ScheduleAPI.h>
 Logger logger("InvisiblePlayer");
 enum CrashDumpLogStringID;
 
@@ -81,6 +82,25 @@ bool isInvisiblePlayer(string name) {
 		}
 	}
 	return false;
+}
+
+#include <MC/RemoveActorPacket.hpp>
+#include <MC/PacketSender.hpp>
+#include <MC/LoopbackPacketSender.hpp>
+void test() {
+	Schedule::repeat([](){
+		Level::forEachPlayer([](Player& sp) -> bool{
+			if (isInvisiblePlayer(&sp)) {
+				auto pkt = RemoveActorPacket(sp.getActorUniqueId());
+				for (auto i : Level::getAllPlayers()) {
+					if(!isInvisiblePlayer(i)) i->sendNetworkPacket(pkt);
+				}
+				//Level::sendPacketForAllPlayer(pkt);
+				//((LoopbackPacketSender*)Global<Level>->getPacketSender())->send(pkt);
+			}
+				return true;
+			});
+   }, 5); 
 }
 
 
@@ -184,8 +204,15 @@ void loadCfg() {
 }//º”‘ÿ≈‰÷√Œƒº˛
 
 
+
 void PluginInit()
 {
 	loadCfg();
+	
+	Event::ServerStartedEvent::subscribe([](const Event::ServerStartedEvent& ev) {
+		test();
+		return true;
+	});
+	
 	logger.info("[InvisiblePlayer] Loaded success");
 }
